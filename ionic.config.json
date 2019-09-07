@@ -1,0 +1,7 @@
+{
+  "name": "DormStreet",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
