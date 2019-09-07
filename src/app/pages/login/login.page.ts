@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertService } from '../../services/alert/alert.service';
 import { Storage } from '@ionic/storage';
 import { PAGES } from '../../../resources/constants/pages';
@@ -11,7 +11,7 @@ import { MenuController } from '@ionic/angular';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit, OnDestroy {
   form = {
     userName: '',
     passWord: ''
@@ -24,6 +24,21 @@ export class LoginPage {
     private router: Router,
     private menuController: MenuController
   ) { }
+
+  resetForms() {
+    this.form = {
+      userName: '',
+      passWord: ''
+    }
+  }
+
+  ngOnInit() {
+    this.resetForms();
+  }
+
+  ngOnDestroy() {
+    this.resetForms();
+  }
 
   login() {
     if (this.form.userName == '' || this.form.passWord == '') {
