@@ -24,3 +24,12 @@ users = [
       postedUnits?: 'User/s will only have this parameter if they posted a unit/s' // number
     }
 ]
+
+// this.sqlite.create({
+//   name: DATABASE.MAINDB,
+//   location: DATABASE.DBLOCATION
+// }).then((db: SQLiteObject) => {
+//   db.executeSql('select * from users', [])
+//     .then((t) => console.log(t))
+//     .catch(e => console.log(e));
+// }).catch(e => console.log(e));

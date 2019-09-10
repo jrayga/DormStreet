@@ -1,4 +1,12 @@
-.welcome-card img {
-  max-height: 35vh;
-  overflow: hidden;
+.home-page {
+
+  &__property-card {
+
+    &--img {
+      display: block;
+      max-width: 100%;
+      height: 100px;
+    }
+  }
+
 }

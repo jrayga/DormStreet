@@ -1,12 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../../../resources/models/user';
+import { SqlQueriesService } from 'src/app/services/sql-queries/sql-queries.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  user: User
 
-  constructor() {}
+  constructor(
+    private sqlQueries: SqlQueriesService
+  ) { }
+
+  ngOnInit() {
+
+  }
 
 }

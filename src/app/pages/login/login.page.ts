@@ -5,6 +5,8 @@ import { PAGES } from '../../../resources/constants/pages';
 import { TABLES } from '../../../resources/constants/TABLES';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { User } from '../../../resources/models/user';
+import { SqlQueriesService } from '../../services/sql-queries/sql-queries.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,8 @@ export class LoginPage implements OnInit, OnDestroy {
     private alertService: AlertService,
     private storage: Storage,
     private router: Router,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private sqlQueries: SqlQueriesService
   ) { }
 
   resetForms() {
@@ -40,26 +43,19 @@ export class LoginPage implements OnInit, OnDestroy {
     this.resetForms();
   }
 
-  login() {
+  async login() {
     if (this.form.userName == '' || this.form.passWord == '') {
       this.alertService.customAlert('Warning', 'Please input your email or/and password!')
     } else {
-      this.storage.get(TABLES.users).then(async user => {
-        const users = await JSON.parse(user);
-        for (const i in users) {
-          this.userExist = await this.form.userName == users[i].userName && this.form.passWord == users[i].passWord;
-        }
-        if (this.userExist) {
-          await this.storage.set(TABLES.session, this.form.userName)
-          await this.menuController.enable(true)
-          await this.router.navigate([PAGES.DASHBOARD]);
-        } else {
-          this.alertService.customAlert('Warning', 'Wrong username or/and password! Please try again.')
-        }
-      }).catch(error => {
-        console.log("TCL: LoginPage -> login -> error", error)
-        this.alertService.presentErrorAlert('while logging in.')
-      })
+      const loginStatus = await this.sqlQueries.login(this.form.userName, this.form.passWord)
+      if (loginStatus) {
+        await this.storage.set(TABLES.session, this.form.userName)
+        await this.menuController.enable(true)
+        await this.router.navigate([PAGES.DASHBOARD]);
+        this.resetForms();
+      } else {
+        this.alertService.customAlert('Warning', 'Wrong username or/and password! Please try again.')
+      }
     }
   }
 

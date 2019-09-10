@@ -26,6 +26,11 @@ const routes: Routes = [
   {
     path: PAGES.REGISTER,
     loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
+  },
+  {
+    path: PAGES.MYPROPERTIES,
+    loadChildren: () => import('./pages/my-properties/my-properties.module').then(m => m.MyPropertiesPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 

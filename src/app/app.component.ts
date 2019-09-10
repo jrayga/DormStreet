@@ -3,11 +3,13 @@ import { Storage } from '@ionic/storage';
 import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { TABLES } from 'src/resources/constants/TABLES';
+import { TABLES } from '../resources/constants/TABLES';
 import { AlertService } from './services/alert/alert.service';
 import { Router } from '@angular/router';
-import { PAGES } from 'src/resources/constants/pages';
+import { PAGES } from '../resources/constants/pages';
 import { SqlQueriesService } from './services/sql-queries/sql-queries.service';
+import { User } from '../resources/models/user';
+import { USERTYPES } from '../resources/enums/userTypes';
 
 @Component({
   selector: 'app-root',
@@ -16,17 +18,19 @@ import { SqlQueriesService } from './services/sql-queries/sql-queries.service';
 })
 export class AppComponent implements OnInit {
   isLoading = false
+  isPropertyOwner = false
+  userDetails: User
 
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
+      title: 'Dashboard',
+      url: `/${PAGES.DASHBOARD}`,
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Acount Details',
+      url: `/${PAGES.ACCOUNTDETAILS}`,
+      icon: 'contact'
     }
   ];
 
@@ -49,7 +53,7 @@ export class AppComponent implements OnInit {
 
   async initializeApp() {
     try {
-      await this.platform.ready()
+      const platform = await this.platform.ready()
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     } catch (exemption) {
@@ -63,14 +67,23 @@ export class AppComponent implements OnInit {
     if (haveSession) {
       await this.router.navigate([PAGES.DASHBOARD])
       this.menuController.enable(true)
+      this.getUserProfile()
     } else {
       this.menuController.enable(false)
     }
     console.log("TCL: AppComponent -> getSession -> haveSession", haveSession)
   }
 
+  async getUserProfile() {
+    this.sqlQueries.getUser().then(async user => {
+      this.userDetails = await user;
+      this.isPropertyOwner = this.userDetails.userType == USERTYPES.OWNER;
+      console.log("TCL: AppComponent -> getUserProfile -> this.userDetails", this.userDetails)
+    })
+  }
+
   async logOut() {
-    await this.storage.remove(TABLES.session)
+    const logOut = this.sqlQueries.logout();
     await this.menuController.enable(false)
     await this.router.navigate([PAGES.LOGIN])
   }
