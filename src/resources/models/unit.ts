@@ -10,6 +10,7 @@ export class Unit {
         public unitDescription: string,
         public unitPhotos: string[],
         public priceOfRent: number,
-        public totalOccupancy: number
+        public totalOccupancy: number,
+        public archived: boolean
     ) { }
 }

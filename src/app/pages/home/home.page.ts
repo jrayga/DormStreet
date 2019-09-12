@@ -14,7 +14,16 @@ export class HomePage implements OnInit {
   user: User
   priceSort = false
   units: Unit[]
+
   isLoadingUnits = false;
+  haveSelectedFilters = false
+
+  filter = {
+    location: '',
+    unitType: '',
+    price: '',
+    numberOfRooms: 0
+  }
 
   constructor(
     private sqlQueries: SqlQueriesService,
@@ -26,20 +35,50 @@ export class HomePage implements OnInit {
     this.getAllUnits();
   }
 
-  async getAllUnits() {
+  async getAllUnits(price?: string, location?: string, unitType?: string, numberOfRooms?: number) {
     this.isLoadingUnits = true
-    const units = await this.sqlQueries.getAllUnits()
+    if (price != undefined || location != undefined || unitType != undefined || numberOfRooms != undefined) {
+      if (unitType !== '') {
+        this.haveSelectedFilters = true
+      }
+      if (location !== '') {
+        this.haveSelectedFilters = true
+      }
+      if (numberOfRooms > 0) {
+        this.haveSelectedFilters = true
+      }
+      if (price !== '') {
+        this.haveSelectedFilters = true
+      }
+    }
+    const units = await this.sqlQueries.getAllUnits(price, location, unitType, numberOfRooms)
     this.units = await units;
     this.isLoadingUnits = false
-    console.log("TCL: HomePage -> getAllUnits -> units", units)
   }
 
   sortPrice() {
     this.priceSort = this.priceSort == true ? false : true;
+    this.filter.price = this.priceSort == true ? 'asc' : 'desc';
+    this.selectFilter('price');
   }
 
   async goToProperty(propertyId: string) {
     await this.router.navigate([`/view-property/${propertyId}`])
+  }
+
+  selectFilter(type: string) {
+    this.getAllUnits(this.filter.price, this.filter.location, this.filter.unitType, this.filter.numberOfRooms)
+  }
+
+  async clearFilters() {
+    this.haveSelectedFilters = false
+    this.filter = {
+      location: '',
+      unitType: '',
+      price: '',
+      numberOfRooms: 0
+    }
+    this.getAllUnits(this.filter.price, this.filter.location, this.filter.unitType, this.filter.numberOfRooms)
   }
 
 }

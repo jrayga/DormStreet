@@ -4,8 +4,9 @@ import { Storage } from '@ionic/storage';
 import { AlertService } from '../alert/alert.service';
 import { User } from '../../../resources/models/user';
 import { Router } from '@angular/router';
-import { PAGES } from 'src/resources/constants/pages';
+import { PAGES } from '../../../resources/constants/pages';
 import * as alasql from 'alasql';
+import { Unit } from '../../../resources/models/unit';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,8 @@ export class SqlQueriesService {
     unitDescription: 'Near TIP, TUP, NTC, CEU. SAN BEDA 10-15 mins to FEU and UST',
     unitPhotos: ['../../assets/images/apart-1-1.PNG', '../../assets/images/apart-1-2.png', '../../assets/images/apart-1-3.png'],
     priceOfRent: 5500,
-    totalOccupancy: 0
+    totalOccupancy: 0,
+    archived: false
   },
   {
     pk: 2,
@@ -55,7 +57,8 @@ export class SqlQueriesService {
     unitDescription: 'Inclusions: Utility Bills (water and electricity) Pwede maglaba Pwede magluto Cabinet May wifi (+100) Walking distance to PUP Main 1 ride at University belt UE Recto CEU FEU NU Landmark: Tapat ng Prince Court',
     unitPhotos: ['../../assets/images/dorm-1-1.PNG', '../../assets/images/dorm-1-2.png', '../../assets/images/dorm-1-3.png'],
     priceOfRent: 1500,
-    totalOccupancy: 0
+    totalOccupancy: 0,
+    archived: false
   },
   {
     pk: 3,
@@ -68,7 +71,8 @@ export class SqlQueriesService {
     unitDescription: '1 Month Advance and 1 Month With Air condition, Kitchen, Lockers and Bathroom Water Included Electricity Excluded Contact: 0909090998',
     unitPhotos: ['../../assets/images/apart-2-1.png', '../../assets/images/apart-2-2.png', '../../assets/images/apart-2-3.png'],
     priceOfRent: 2200,
-    totalOccupancy: 0
+    totalOccupancy: 0,
+    archived: false
   },
   {
     pk: 4,
@@ -81,7 +85,8 @@ export class SqlQueriesService {
     unitDescription: 'Good for 2 to 3 person W/Appliances Loft Type W/2beds Amenities Lap Pool Social hall Gym Roof Deck 24hrs security CCTV hallway 2 months deposit 1 month advance',
     unitPhotos: ['../../assets/images/apart-3-1.png', '../../assets/images/apart-3-2.png', '../../assets/images/apart-3-3.png'],
     priceOfRent: 13000,
-    totalOccupancy: 0
+    totalOccupancy: 0,
+    archived: false
   },
   {
     pk: 5,
@@ -94,21 +99,42 @@ export class SqlQueriesService {
     unitDescription: 'We accept Bedspacer & Transient Loc: Victoria de Manila, along Taft Ave. Corner Pedro Gil For Transient: Room w/ AC: 750/day per room Bedspace w/ AC: 350/day per head For Monthly: Room w/ AC: 15,000 per room Room w/ AC: 12,000 per room (open sept. 21 - oct. 27) Room w/o AC: 8,000 per room Bedspace w/ AC: 5,500 per head Inclusion: Water Electricity AC (6:00pm to 6:00am Only) Electric Fan ReF Bed and foam Mode of payment: 1month advance and 1month deposit PM for details.',
     unitPhotos: ['../../assets/images/dorm-2-1.png', '../../assets/images/dorm-2-2.png', '../../assets/images/dorm-2-3.png'],
     priceOfRent: 5500,
-    totalOccupancy: 0
+    totalOccupancy: 0,
+    archived: false
   }]
 
   userDetails: User
+  getUnits: Unit[]
 
   constructor(
     private storage: Storage,
     private alertService: AlertService,
     private router: Router
-  ) {}
+  ) { }
 
-  getAllUnits() {
+  getAllUnits(price?: string, location?: string, unitType?: string, numberOfRooms?: number) {
     return this.storage.get(TABLES.units).then(async units => {
       const unitsIn = await JSON.parse(units);
-      const getUnits = await alasql('SELECT * from ? ORDER BY unitTitle asc', [unitsIn]);
+      console.log("TCL: SqlQueriesService -> getAllUnits -> unitsIn", unitsIn)
+      let getUnits;
+      if (price != undefined || location != undefined || unitType != undefined || numberOfRooms != undefined) {
+        let unitTypeSql = '', locationSql = '', numberOfRoomsSql = '', priceSql = '';
+        if (unitType !== '') {
+          unitTypeSql = `AND unitType = '${unitType}' `;
+        }
+        if (location !== '') {
+          locationSql = `AND location = '${location}' `;
+        }
+        if (numberOfRooms > 0) {
+          numberOfRoomsSql = `AND numberOfRooms > ${numberOfRooms} `;
+        }
+        if (price !== '') {
+          priceSql = `ORDER BY priceOfRent ${price} `;
+        }
+        getUnits = await alasql(`SELECT * from ? WHERE archived = false ${unitTypeSql} ${locationSql} ${numberOfRoomsSql} ${priceSql}`, [unitsIn]);
+      } else {
+        getUnits = await alasql('SELECT * from ? ORDER BY unitTitle asc', [unitsIn]);
+      }
       return await getUnits;
     }).catch(error => {
       console.log("TCL: SqlQueriesService -> getAllUnits -> error", error)
