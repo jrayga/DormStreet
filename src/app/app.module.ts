@@ -11,14 +11,13 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule } from '@angular/forms';
-import { SQLite } from '@ionic-native/sqlite/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({ scrollAssist: false, hardwareBackButton: false }),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     FormsModule
@@ -26,8 +25,7 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    SQLite
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

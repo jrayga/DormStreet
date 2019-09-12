@@ -11,19 +11,98 @@
 <ion-content class="home-page">
   <ion-grid fixed="true">
     <ion-row>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label>Location</ion-label>
+          <ion-select placeholder="Select One Location">
+            <ion-select-option value="City of Manila">City of Manila</ion-select-option>
+            <ion-select-option value="Caloocan">Caloocan</ion-select-option>
+            <ion-select-option value="Las Pinas">Las Pinas</ion-select-option>
+            <ion-select-option value="Makati">Makati</ion-select-option>
+            <ion-select-option value="Malabon">Malabon</ion-select-option>
+            <ion-select-option value="Mandaluyong">Mandaluyong</ion-select-option>
+            <ion-select-option value="Marikina">Marikina</ion-select-option>
+            <ion-select-option value="Muntinlupa">Muntinlupa</ion-select-option>
+            <ion-select-option value="Navotas">Navotas</ion-select-option>
+            <ion-select-option value="Parañaque">Parañaque</ion-select-option>
+            <ion-select-option value="Pasay">Pasay</ion-select-option>
+            <ion-select-option value="Pasig">Pasig</ion-select-option>
+            <ion-select-option value="Pateros">Pateros</ion-select-option>
+            <ion-select-option value="Quezon City">Quezon City</ion-select-option>
+            <ion-select-option value="San Juan">San Juan</ion-select-option>
+            <ion-select-option value="Taguig">Taguig</ion-select-option>
+            <ion-select-option value="Valenzuela">Valenzuela</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label>Unit Type</ion-label>
+          <ion-select placeholder="Select One Unit Type">
+            <ion-select-option value="Apartment">Apartment</ion-select-option>
+            <ion-select-option value="Dormitory">Dormitory</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col class="home-page__price-text" size="4" (click)="sortPrice()">
+        <p>Price : <ion-icon *ngIf="priceSort" name="arrow-round-up" inline="true"></ion-icon>
+          <ion-icon *ngIf="!priceSort" name="arrow-round-down" inline="true"></ion-icon>
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col size="6">
-        <ion-card class="home-page__property-card" button="true">
-          <ion-img class="home-page__property-card--img" src="../../assets/test-icon.png"></ion-img>
+        <ion-item>
+          <ion-label>Number Of Rooms</ion-label>
+          <ion-select placeholder="Select One Number Of Rooms">
+            <ion-select-option value="5">1 to 5</ion-select-option>
+            <ion-select-option value="10">5 to 10</ion-select-option>
+            <ion-select-option value="11">10+</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label>Price Of Rent</ion-label>
+          <ion-select placeholder="Select One Price Of Rent">
+            <ion-select-option value="100">Lower than 1000PHP</ion-select-option>
+            <ion-select-option value="1000">1000PHP to 5000PHP</ion-select-option>
+            <ion-select-option value="5000">5000PHP+</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item-divider>
+          <ion-label>
+            Units Available
+          </ion-label>
+        </ion-item-divider>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isLoadingUnits">
+      <ion-col size="12">
+        <ion-spinner color="primary" name="dots"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!isLoadingUnits">
+      <ion-col size="6" *ngFor="let unit of units">
+        <ion-card class="home-page__property-card" button="true" (click)="goToProperty(unit.unitId)">
+          <ion-img class="home-page__property-card--img" src="{{unit.unitPhotos[0]}}"></ion-img>
           <ion-card-header>
-            <ion-card-title>Card Title</ion-card-title>
+            <ion-card-title>{{unit.unitTitle}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <p>1200 m/0</p>
-            <p>Mandaluyong</p>
-            <p>Dorm</p>
+            <p>{{unit.priceOfRent}} m/o</p>
+            <p>{{unit.location}}</p>
+            <p>{{unit.unitType}}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
+
   </ion-grid>
 </ion-content>

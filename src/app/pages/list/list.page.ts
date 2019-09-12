@@ -19,6 +19,7 @@ export class ListPage implements OnInit {
     userName: '',
     passWord: '',
     email: '',
+    contactNumber: '',
     postedUnits: []
   };
 
@@ -75,7 +76,7 @@ export class ListPage implements OnInit {
   }
 
   async updateDetails() {
-    if (this.form.email == '' || this.form.userName == '') {
+    if (this.form.email == '' || this.form.userName == '' || this.form.contactNumber == '') {
       this.alertService.customAlert('Warning', 'Please fill up all the forms!')
     } else {
       const updateDetailsStats = await this.sqlQueries.updateDetails(this.form)

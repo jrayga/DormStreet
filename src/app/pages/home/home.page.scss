@@ -1,6 +1,12 @@
 .home-page {
 
+  &__price-text {
+    text-align: center;
+    cursor: pointer;
+  }
+
   &__property-card {
+    height: 280px;
 
     &--img {
       display: block;

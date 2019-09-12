@@ -6,6 +6,7 @@ export class User {
         public email: string,
         public passWord: string,
         public archived: false,
+        public contactNumber: string,
         public postedUnits?: string[]
     ) { }
 }

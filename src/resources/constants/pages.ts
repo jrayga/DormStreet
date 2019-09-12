@@ -3,5 +3,6 @@ export const PAGES = {
     ACCOUNTDETAILS: 'account-details',
     LOGIN: 'login',
     REGISTER: 'register',
-    MYPROPERTIES: 'my-properties'
+    MYPROPERTIES: 'my-properties',
+    VIEWPROPERTY: 'view-property/:propertyId'
 }

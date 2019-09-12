@@ -31,7 +31,13 @@ const routes: Routes = [
     path: PAGES.MYPROPERTIES,
     loadChildren: () => import('./pages/my-properties/my-properties.module').then(m => m.MyPropertiesPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: PAGES.VIEWPROPERTY,
+    loadChildren: () => import('./pages/view-property/view-property.module').then(m => m.ViewPropertyPageModule),
+    canActivate: [AuthGuard]
   }
+
 ];
 
 @NgModule({

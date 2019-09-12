@@ -9,6 +9,7 @@ export class Unit {
         public unitTitle: string,
         public unitDescription: string,
         public unitPhotos: string[],
-        public priceOfRent: number
+        public priceOfRent: number,
+        public totalOccupancy: number
     ) { }
 }

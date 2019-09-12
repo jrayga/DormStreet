@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
     this.initializeApp();
     this.getSession();
     this.sqlQueries.setUserAccounts();
+    this.sqlQueries.setUnits();
   }
 
   async initializeApp() {

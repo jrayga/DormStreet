@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/dashboard']" routerLinkActive="router-link-active">
+        <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Unit Details
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding view-property">
+  <ion-grid fixed="true">
+    <ion-row *ngIf="isLoadingDetails">
+      <ion-col size="12">
+        <ion-spinner color="primary" name="dots"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="!isLoadingDetails">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides pager="true" [options]="slideOpts">
+            <ion-slide *ngFor="let img of unitDetails.unitPhotos">
+              <ion-img class="view-property__slide-images" src="{{img}}"></ion-img>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <h1 class="view-property__title">{{unitDetails.unitTitle}}</h1>
+          <p>Location: {{unitDetails.location}}</p>
+          <p>Price of Rent: {{unitDetails.priceOfRent}} m/o</p>
+          <p>Room Size: {{unitDetails.roomSize}}</p>
+          <p>Total Occupancy: {{unitDetails.totalOccupancy}}</p>
+          <p>{{unitDetails.unitDescription}}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>

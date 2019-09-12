@@ -16,6 +16,7 @@ export class RegisterPage implements OnInit, OnDestroy {
     userName: '',
     passWord: '',
     email: '',
+    contactNumber: '',
     postedUnits: []
   };
 
@@ -44,6 +45,7 @@ export class RegisterPage implements OnInit, OnDestroy {
       userName: '',
       passWord: '',
       email: '',
+      contactNumber: '',
       postedUnits: []
     };
     this.passwordsForm = {
@@ -53,7 +55,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   }
 
   async register() {
-    if (this.registrationForm.userName == '' || this.registrationForm.email == '' || this.registrationForm.userType == '') {
+    if (this.registrationForm.userName == '' || this.registrationForm.email == '' || this.registrationForm.userType == '' || this.registrationForm.contactNumber == '') {
       this.alertService.customAlert('Warning', 'Please fill up all the forms')
     } else {
       if (this.passwordsForm.pass1 == this.passwordsForm.pass2) {
