@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/my-properties']" routerLinkActive="router-link-active">
+        <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Add New Property
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="add-new-property">
+  <ion-grid fixed="true">
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Unit Type</ion-label>
+          <ion-select [(ngModel)]="unitForm.unitType" placeholder="Select One Unit Type">
+            <ion-select-option value="Apartment">Apartment</ion-select-option>
+            <ion-select-option value="Dormitory">Dormitory</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Location</ion-label>
+          <ion-select [(ngModel)]="unitForm.location" placeholder="Select One Location">
+            <ion-select-option value="City of Manila">City of Manila</ion-select-option>
+            <ion-select-option value="Caloocan">Caloocan</ion-select-option>
+            <ion-select-option value="Las Pinas">Las Pinas</ion-select-option>
+            <ion-select-option value="Makati">Makati</ion-select-option>
+            <ion-select-option value="Malabon">Malabon</ion-select-option>
+            <ion-select-option value="Mandaluyong">Mandaluyong</ion-select-option>
+            <ion-select-option value="Marikina">Marikina</ion-select-option>
+            <ion-select-option value="Muntinlupa">Muntinlupa</ion-select-option>
+            <ion-select-option value="Navotas">Navotas</ion-select-option>
+            <ion-select-option value="Parañaque">Parañaque</ion-select-option>
+            <ion-select-option value="Pasay">Pasay</ion-select-option>
+            <ion-select-option value="Pasig">Pasig</ion-select-option>
+            <ion-select-option value="Pateros">Pateros</ion-select-option>
+            <ion-select-option value="Quezon City">Quezon City</ion-select-option>
+            <ion-select-option value="San Juan">San Juan</ion-select-option>
+            <ion-select-option value="Taguig">Taguig</ion-select-option>
+            <ion-select-option value="Valenzuela">Valenzuela</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Number Of Room/s</ion-label>
+          <ion-input [(ngModel)]="unitForm.numberOfRooms" type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Roomsize <small>(sqm)</small></ion-label>
+          <ion-input [(ngModel)]="unitForm.roomSize" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Unit Title</ion-label>
+          <ion-input [(ngModel)]="unitForm.unitTitle" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Unit Description</ion-label>
+          <ion-textarea [(ngModel)]="unitForm.unitDescription" rows="5"
+            placeholder="Enter a small description about the unit here...">
+          </ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button (click)="getUnitImages()" expand="block" color="secondary">
+          <ion-icon slot="start" name="camera"></ion-icon>
+          Get Images
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="images.length > 0">
+      <ion-col size="12">
+        <ion-slides pager="true">
+          <ion-slide *ngFor="let img of images">
+            <img class="add-new-property__slide-images" src="{{img}}" />
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Price Of Rent</ion-label>
+          <ion-input [(ngModel)]="unitForm.priceOfRent" type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Total Occupancy</ion-label>
+          <ion-input [(ngModel)]="unitForm.totalOccupancy" type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button (click)="addUnit()" expand="block" color="primary">
+          <ion-icon slot="end" name="add"></ion-icon>
+          Add New Unit
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

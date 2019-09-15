@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
 
   isLoadingUnits = false;
   haveSelectedFilters = false
+  isEmtpy = false
 
   filter = {
     location: '',
@@ -53,16 +54,17 @@ export class HomePage implements OnInit {
     }
     const units = await this.sqlQueries.getAllUnits(price, location, unitType, numberOfRooms)
     this.units = await units;
+    this.isEmtpy = this.units.length == 0 ? true : false;
     this.isLoadingUnits = false
   }
 
   sortPrice() {
     this.priceSort = this.priceSort == true ? false : true;
-    this.filter.price = this.priceSort == true ? 'asc' : 'desc';
+    this.filter.price = this.priceSort == true ? 'desc' : 'asc';
     this.selectFilter('price');
   }
 
-  async goToProperty(propertyId: string) {
+  async goToProperty(propertyId: number) {
     await this.router.navigate([`/view-property/${propertyId}`])
   }
 

@@ -4,5 +4,7 @@ export const PAGES = {
     LOGIN: 'login',
     REGISTER: 'register',
     MYPROPERTIES: 'my-properties',
-    VIEWPROPERTY: 'view-property/:propertyId'
+    VIEWPROPERTY: 'view-property/:propertyId',
+    ADDNEWPROPERTY: 'add-new-property',
+    UPDATEPROPERTY: 'update-property/:propertyId'
 }

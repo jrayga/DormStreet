@@ -1,0 +1,20 @@
+.update-property {
+
+    &__spinner-loader {
+        position: fixed;
+        z-index: 999 !important;
+        height: 5em;
+        width: 5em;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    &__slide-images {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+}

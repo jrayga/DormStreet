@@ -86,25 +86,33 @@
 
     <ion-row *ngIf="isLoadingUnits">
       <ion-col size="12">
-        <ion-spinner color="primary" name="dots"></ion-spinner>
+        <ion-spinner class="home-page__spinner-loader" color="primary" name="dots"></ion-spinner>
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="!isLoadingUnits">
-      <ion-col size="6" *ngFor="let unit of units">
-        <ion-card class="home-page__property-card" button="true" (click)="goToProperty(unit.unitId)">
-          <ion-img class="home-page__property-card--img" src="{{unit.unitPhotos[0]}}"></ion-img>
-          <ion-card-header>
-            <ion-card-title>{{unit.unitTitle}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <p>{{unit.priceOfRent}} m/o</p>
-            <p>{{unit.location}}</p>
-            <p>{{unit.unitType}}</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
+    <div *ngIf="!isLoadingUnits">
+      <ion-row *ngIf="!isEmtpy; else noUnitsAvailable">
+        <ion-col size="6" *ngFor="let unit of units">
+          <ion-card class="home-page__property-card" button="true" (click)="goToProperty(unit.pk)">
+            <ion-img class="home-page__property-card--img" src="{{unit.unitPhotos[0]}}"></ion-img>
+            <ion-card-header>
+              <ion-card-title>{{unit.unitTitle}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>{{unit.priceOfRent}} m/o</p>
+              <p>{{unit.location}}</p>
+              <p>{{unit.unitType}}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ng-template #noUnitsAvailable>
+        <ion-row>
+          <ion-col size="12">
+            <h1 class="home-page__no-units-msg">No Unit/s Found! Please select a new filter/s or clear it.</h1>
+          </ion-col>
+        </ion-row>
+      </ng-template>
+    </div>
   </ion-grid>
 </ion-content>

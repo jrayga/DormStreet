@@ -5,6 +5,18 @@
     cursor: pointer;
   }
 
+  &__spinner-loader {
+    position: fixed;
+    z-index: 999 !important;
+    height: 5em;
+    width: 5em;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
   &__property-card {
     height: 310px;
 
@@ -13,6 +25,10 @@
       max-width: 100%;
       height: 100px;
     }
+  }
+
+  &__no-units-msg {
+    text-align: center;
   }
 
 }

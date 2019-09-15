@@ -10,6 +10,7 @@ import { PAGES } from '../resources/constants/pages';
 import { SqlQueriesService } from './services/sql-queries/sql-queries.service';
 import { User } from '../resources/models/user';
 import { USERTYPES } from '../resources/enums/userTypes';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +35,8 @@ export class AppComponent implements OnInit {
     }
   ];
 
+  intevalCounter = 0;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -42,7 +45,8 @@ export class AppComponent implements OnInit {
     private alertService: AlertService,
     private menuController: MenuController,
     private router: Router,
-    private sqlQueries: SqlQueriesService
+    private sqlQueries: SqlQueriesService,
+    private imagePicker: ImagePicker
   ) { }
 
   ngOnInit() {
@@ -50,6 +54,21 @@ export class AppComponent implements OnInit {
     this.getSession();
     this.sqlQueries.setUserAccounts();
     this.sqlQueries.setUnits();
+    this.userRoleChecker()
+  }
+
+  userRoleChecker() {
+    setInterval(() => {
+      if (this.intevalCounter < 5) {
+        this.intevalCounter++;
+        this.getUserProfile()
+        if (this.userDetails !== undefined) {
+          this.isPropertyOwner = this.userDetails.userType == USERTYPES.OWNER ? true : false;
+        }
+      } else {
+        this.intevalCounter = 0;
+      }
+    }, 1000)
   }
 
   async initializeApp() {
@@ -57,9 +76,22 @@ export class AppComponent implements OnInit {
       const platform = await this.platform.ready()
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.deviceRequest();
     } catch (exemption) {
       console.log("TCL: AppComponent -> initializeApp -> exemption", exemption)
-      this.alertService.presentErrorAlert('On initializeApp.')
+      this.alertService.presentErrorAlert('Error on initializeApp.')
+    }
+  }
+
+  async deviceRequest() {
+    try {
+      const hasPermission = await this.imagePicker.hasReadPermission()
+      if (!hasPermission) {
+        await this.imagePicker.requestReadPermission();
+      }
+    } catch (error) {
+      console.log("TCL: AppComponent -> deviceRequest -> error", error)
+      this.alertService.presentErrorAlert('Error on device request for image select.')
     }
   }
 
@@ -72,15 +104,15 @@ export class AppComponent implements OnInit {
     } else {
       this.menuController.enable(false)
     }
-    console.log("TCL: AppComponent -> getSession -> haveSession", haveSession)
   }
 
   async getUserProfile() {
-    this.sqlQueries.getUser().then(async user => {
+    try {
+      const user = await this.sqlQueries.getUser();
       this.userDetails = await user;
-      this.isPropertyOwner = this.userDetails.userType == USERTYPES.OWNER;
-      console.log("TCL: AppComponent -> getUserProfile -> this.userDetails", this.userDetails)
-    })
+    } catch (error) {
+      console.log("TCL: AppComponent -> getUserProfile -> error", error)
+    }
   }
 
   async logOut() {

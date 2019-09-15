@@ -20,7 +20,7 @@ export class SqlQueriesService {
     passWord: '123123',
     archived: false,
     contactNumber: '09112233445',
-    postedUnits: ['01', '02', '03', '04', '05']
+    postedUnits: ['1', '1', '1', '1', '1']
   },
   {
     pk: 2,
@@ -34,7 +34,7 @@ export class SqlQueriesService {
 
   units = [{
     pk: 1,
-    unitId: '01',
+    unitId: '1',
     unitType: 'Apartment',
     location: 'City of Manila',
     numberOfRooms: 6,
@@ -48,7 +48,7 @@ export class SqlQueriesService {
   },
   {
     pk: 2,
-    unitId: '02',
+    unitId: '1',
     unitType: 'Dormitory',
     location: 'City of Manila',
     numberOfRooms: 5,
@@ -62,7 +62,7 @@ export class SqlQueriesService {
   },
   {
     pk: 3,
-    unitId: '03',
+    unitId: '1',
     unitType: 'Apartment',
     location: 'City of Manila',
     numberOfRooms: 6,
@@ -76,7 +76,7 @@ export class SqlQueriesService {
   },
   {
     pk: 4,
-    unitId: '04',
+    unitId: '1',
     unitType: 'Apartment',
     location: 'City of Manila',
     numberOfRooms: 3,
@@ -90,7 +90,7 @@ export class SqlQueriesService {
   },
   {
     pk: 5,
-    unitId: '05',
+    unitId: '1',
     unitType: 'Dormitory',
     location: 'City of Manila',
     numberOfRooms: 10,
@@ -142,11 +142,11 @@ export class SqlQueriesService {
     })
   }
 
-  getUnit(unitId: string) {
+  getUnit(pk: string) {
     return this.storage.get(TABLES.units).then(async units => {
       const unitsIn = await JSON.parse(units);
       console.log("TCL: SqlQueriesService -> getUnit -> unitsIn", unitsIn)
-      const getUnit = await alasql(`SELECT * from ? WHERE unitId = '${unitId}'`, [unitsIn]);
+      const getUnit = await alasql(`SELECT * from ? WHERE pk = ${pk}`, [unitsIn]);
       return await getUnit;
     }).catch(error => {
       console.log("TCL: SqlQueriesService -> getUnit -> error", error)
@@ -267,7 +267,67 @@ export class SqlQueriesService {
     })
   }
 
+  getUserUnits(unitIds: string[]) {
+    return this.storage.get(TABLES.units).then(async units => {
+      const unitsIn = await JSON.parse(units);
+      const userUnits = await alasql(`SELECT * FROM ? WHERE unitId = '${unitIds[0]}'`, [unitsIn])
+      console.log("TCL: SqlQueriesService -> getUserUnits -> userUnits", userUnits)
+      return await userUnits;
+    }).catch(error => {
+      console.log("TCL: SqlQueriesService -> getUserUnits -> error", error)
+      this.alertService.presentErrorAlert('while getting user units.')
+    })
+  }
+
   async logout() {
     await this.storage.remove(TABLES.session)
   }
+
+  addNewUnit(unitDetails) {
+    this.storage.get(TABLES.units).then(async units => {
+      let unitsIn = await JSON.parse(units)
+      await unitsIn.push(unitDetails)
+      try {
+        const addUnit = await this.storage.set(TABLES.units, JSON.stringify(unitsIn));
+        this.alertService.presentSuccessAlert("You're unit has been successfully added.")
+        await this.router.navigate([PAGES.MYPROPERTIES]);
+      } catch (error) {
+        console.log("TCL: SqlQueriesService -> addNewUnit -> error", error)
+        this.alertService.presentErrorAlert('While adding your unit.')
+      }
+    }).catch(error => {
+      console.log("TCL: SqlQueriesService -> addNewUnit -> error", error)
+      this.alertService.presentErrorAlert('while adding your unit.')
+    })
+  }
+
+  async updateUnitDetails(userDetails) {
+    return this.storage.get(TABLES.units).then(async units => {
+      const unitsIn = await JSON.parse(units);
+      let detailsUpdated = false;
+      for (const u in unitsIn) {
+        if (userDetails.pk == unitsIn[u].pk) {
+          unitsIn[u].unitId = await userDetails.unitId;
+          unitsIn[u].unitType = await userDetails.unitType;
+          unitsIn[u].location = await userDetails.location;
+          unitsIn[u].numberOfRooms = await userDetails.numberOfRooms;
+          unitsIn[u].roomSize = await userDetails.roomSize;
+          unitsIn[u].unitTitle = await userDetails.unitTitle;
+          unitsIn[u].unitDescription = await userDetails.unitDescription;
+          unitsIn[u].unitPhotos = await userDetails.unitPhotos;
+          unitsIn[u].priceOfRent = await userDetails.priceOfRent;
+          unitsIn[u].totalOccupancy = await userDetails.totalOccupancy;
+          unitsIn[u].archived = await userDetails.archived;
+          detailsUpdated = true;
+          break;
+        }
+      }
+      await this.storage.set(TABLES.units, JSON.stringify(unitsIn))
+      return detailsUpdated
+    }).catch(error => {
+      console.log("TCL: SqlQueriesService -> updateUnit -> error", error)
+      this.alertService.presentErrorAlert('while updating unit details.')
+    })
+  }
+
 }

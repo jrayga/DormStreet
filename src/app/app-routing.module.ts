@@ -36,8 +36,17 @@ const routes: Routes = [
     path: PAGES.VIEWPROPERTY,
     loadChildren: () => import('./pages/view-property/view-property.module').then(m => m.ViewPropertyPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: PAGES.ADDNEWPROPERTY,
+    loadChildren: () => import('./pages/add-new-property/add-new-property.module').then(m => m.AddNewPropertyPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: PAGES.UPDATEPROPERTY,
+    loadChildren: () => import('./pages/update-property/update-property.module').then(m => m.UpdatePropertyPageModule),
+    canActivate: [AuthGuard]
   }
-
 ];
 
 @NgModule({
