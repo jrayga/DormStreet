@@ -3,6 +3,7 @@ import { User } from '../../../resources/models/user';
 import { AlertService } from '../../services/alert/alert.service';
 import { SqlQueriesService } from '../../services/sql-queries/sql-queries.service';
 import { USERTYPES } from 'src/resources/enums/userTypes';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -27,11 +28,22 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private sqlQueries: SqlQueriesService
+    private sqlQueries: SqlQueriesService,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.resetForms();
+    this.setInitPage();
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   ngOnDestroy() {

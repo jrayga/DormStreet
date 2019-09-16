@@ -4,6 +4,7 @@ import { SqlQueriesService } from '../../services/sql-queries/sql-queries.servic
 import { Unit } from '../../../resources/models/unit';
 import { LoadingService } from '../../services/loading/loading.service';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -29,11 +30,22 @@ export class HomePage implements OnInit {
   constructor(
     private sqlQueries: SqlQueriesService,
     private loadingService: LoadingService,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.getAllUnits();
+    this.setInitPage();
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   async getAllUnits(price?: string, location?: string, unitType?: string, numberOfRooms?: number) {

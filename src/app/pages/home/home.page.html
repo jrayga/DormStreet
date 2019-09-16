@@ -94,7 +94,7 @@
       <ion-row *ngIf="!isEmtpy; else noUnitsAvailable">
         <ion-col size="6" *ngFor="let unit of units">
           <ion-card class="home-page__property-card" button="true" (click)="goToProperty(unit.pk)">
-            <ion-img class="home-page__property-card--img" src="{{unit.unitPhotos[0]}}"></ion-img>
+            <img class="home-page__property-card--img" src="{{unit.unitPhotos[0]}}" />
             <ion-card-header>
               <ion-card-title>{{unit.unitTitle}}</ion-card-title>
             </ion-card-header>

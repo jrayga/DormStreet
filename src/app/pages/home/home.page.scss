@@ -20,6 +20,12 @@
   &__property-card {
     height: 310px;
 
+    &--img-holder {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
     &--img {
       display: block;
       max-width: 100%;

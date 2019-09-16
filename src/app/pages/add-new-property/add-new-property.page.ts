@@ -5,6 +5,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { ImagePickerOptions } from '../../../resources/constants/image-picker-options';
 import { SqlQueriesService } from 'src/app/services/sql-queries/sql-queries.service';
 import { User } from '../../../resources/models/user';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-new-property',
@@ -19,11 +20,22 @@ export class AddNewPropertyPage implements OnInit {
   constructor(
     private alertService: AlertService,
     private imagePicker: ImagePicker,
-    private sqlQueries: SqlQueriesService
+    private sqlQueries: SqlQueriesService,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.getOwnerDetails()
+    this.setInitPage()
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   async getOwnerDetails() {

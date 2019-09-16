@@ -3,7 +3,7 @@ import { SqlQueriesService } from '../../services/sql-queries/sql-queries.servic
 import { User } from '../../../resources/models/user';
 import { USERTYPES } from '../../../resources/enums/userTypes';
 import { AlertService } from 'src/app/services/alert/alert.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PAGES } from '../../../resources/constants/pages';
 
@@ -36,11 +36,22 @@ export class ListPage implements OnInit {
     private sqlQueries: SqlQueriesService,
     private alertService: AlertService,
     private menuController: MenuController,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.getUserProfile();
+    this.setInitPage();
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   async getUserProfile() {

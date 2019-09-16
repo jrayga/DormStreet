@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { PAGES } from '../../../resources/constants/pages';
 import { TABLES } from '../../../resources/constants/TABLES';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { User } from '../../../resources/models/user';
 import { SqlQueriesService } from '../../services/sql-queries/sql-queries.service';
 
@@ -25,8 +25,10 @@ export class LoginPage implements OnInit, OnDestroy {
     private storage: Storage,
     private router: Router,
     private menuController: MenuController,
-    private sqlQueries: SqlQueriesService
+    private sqlQueries: SqlQueriesService,
+    private platform: Platform
   ) { }
+
 
   resetForms() {
     this.form = {
@@ -37,6 +39,16 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.resetForms();
+    this.setInitPage();
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   ngOnDestroy() {

@@ -74,6 +74,7 @@ export class AppComponent implements OnInit {
   async initializeApp() {
     try {
       const platform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.deviceRequest();

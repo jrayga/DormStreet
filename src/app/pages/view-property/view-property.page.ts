@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SqlQueriesService } from '../../services/sql-queries/sql-queries.service';
 import { Unit } from '../../../resources/models/unit';
 import { AlertService } from '../../services/alert/alert.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-property',
@@ -17,12 +18,23 @@ export class ViewPropertyPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private sqlQueries: SqlQueriesService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.unitId = this.activatedRoute.snapshot.params['propertyId'];
     this.getUnitDetails();
+    this.setInitPage();
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   async getUnitDetails() {

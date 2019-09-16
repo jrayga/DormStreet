@@ -4,6 +4,7 @@ import { SqlQueriesService } from '../../services/sql-queries/sql-queries.servic
 import { Unit } from '../../../resources/models/unit';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PAGES } from '../../../resources/constants/pages';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-properties',
@@ -20,13 +21,24 @@ export class MyPropertiesPage implements OnInit {
   constructor(
     private sqlQueries: SqlQueriesService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
       this.getUserProfile();
     })
+    this.setInitPage();
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   async getUserProfile() {

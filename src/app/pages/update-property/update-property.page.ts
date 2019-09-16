@@ -7,6 +7,7 @@ import { SqlQueriesService } from 'src/app/services/sql-queries/sql-queries.serv
 import { User } from '../../../resources/models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PAGES } from '../../../resources/constants/pages';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-update-property',
@@ -25,12 +26,23 @@ export class UpdatePropertyPage implements OnInit {
     private imagePicker: ImagePicker,
     private sqlQueries: SqlQueriesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.unitId = this.activatedRoute.snapshot.params['propertyId'];
     this.getUnitDetails()
+    this.setInitPage();
+  }
+
+  async setInitPage() {
+    try {
+      const readyPlatform = await this.platform.ready()
+      document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
+    } catch (error) {
+      console.log("TCL: AddNewPropertyPage -> setInitPage -> error", error)
+    }
   }
 
   async getUnitDetails() {
