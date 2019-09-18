@@ -12,96 +12,169 @@ import { Unit } from '../../../resources/models/unit';
   providedIn: 'root'
 })
 export class SqlQueriesService {
-  users = [{
-    pk: 1,
-    userType: 'PropertyOwner',
-    userName: 'Owner01',
-    email: 'owner01@yopmail.com',
-    passWord: '123123',
-    archived: false,
-    contactNumber: '09112233445',
-    postedUnits: ['1', '1', '1', '1', '1']
-  },
-  {
-    pk: 2,
-    userType: 'NormalUser',
-    userName: 'User01',
-    email: 'user01@yopmail.com',
-    passWord: '123123',
-    contactNumber: '09224466889',
-    archived: false
-  }];
+  users = [
+    {
+      pk: 1,
+      userType: 'PropertyOwner',
+      userName: 'Owner01',
+      email: 'owner01@yopmail.com',
+      passWord: '123123',
+      archived: false,
+      contactNumber: '09112233445',
+      postedUnits: ['1', '1', '1', '1', '1']
+    },
+    {
+      pk: 2,
+      userType: 'NormalUser',
+      userName: 'User01',
+      email: 'user01@yopmail.com',
+      passWord: '123123',
+      contactNumber: '09224466889',
+      archived: false
+    }];
 
-  units = [{
-    pk: 1,
-    unitId: '1',
-    unitType: 'Apartment',
-    location: 'City of Manila',
-    numberOfRooms: 6,
-    roomSize: '25sqm',
-    unitTitle: 'Vista Heights Apartment',
-    unitDescription: 'Near TIP, TUP, NTC, CEU. SAN BEDA 10-15 mins to FEU and UST',
-    unitPhotos: ['../../assets/images/apart-1-1.PNG', '../../assets/images/apart-1-2.png', '../../assets/images/apart-1-3.png'],
-    priceOfRent: 5500,
-    totalOccupancy: 0,
-    archived: false
-  },
-  {
-    pk: 2,
-    unitId: '1',
-    unitType: 'Dormitory',
-    location: 'City of Manila',
-    numberOfRooms: 5,
-    roomSize: '10sqm',
-    unitTitle: 'Female Bedspacer For Rent',
-    unitDescription: 'Inclusions: Utility Bills (water and electricity) Pwede maglaba Pwede magluto Cabinet May wifi (+100) Walking distance to PUP Main 1 ride at University belt UE Recto CEU FEU NU Landmark: Tapat ng Prince Court',
-    unitPhotos: ['../../assets/images/dorm-1-1.PNG', '../../assets/images/dorm-1-2.png', '../../assets/images/dorm-1-3.png'],
-    priceOfRent: 1500,
-    totalOccupancy: 0,
-    archived: false
-  },
-  {
-    pk: 3,
-    unitId: '1',
-    unitType: 'Apartment',
-    location: 'City of Manila',
-    numberOfRooms: 6,
-    roomSize: '20sqm',
-    unitTitle: 'Bedspace Female Manila',
-    unitDescription: '1 Month Advance and 1 Month With Air condition, Kitchen, Lockers and Bathroom Water Included Electricity Excluded Contact: 0909090998',
-    unitPhotos: ['../../assets/images/apart-2-1.png', '../../assets/images/apart-2-2.png', '../../assets/images/apart-2-3.png'],
-    priceOfRent: 2200,
-    totalOccupancy: 0,
-    archived: false
-  },
-  {
-    pk: 4,
-    unitId: '1',
-    unitType: 'Apartment',
-    location: 'City of Manila',
-    numberOfRooms: 3,
-    roomSize: '25sqm',
-    unitTitle: 'Unit for Rent Near Pureza Station',
-    unitDescription: 'Good for 2 to 3 person W/Appliances Loft Type W/2beds Amenities Lap Pool Social hall Gym Roof Deck 24hrs security CCTV hallway 2 months deposit 1 month advance',
-    unitPhotos: ['../../assets/images/apart-3-1.png', '../../assets/images/apart-3-2.png', '../../assets/images/apart-3-3.png'],
-    priceOfRent: 13000,
-    totalOccupancy: 0,
-    archived: false
-  },
-  {
-    pk: 5,
-    unitId: '1',
-    unitType: 'Dormitory',
-    location: 'City of Manila',
-    numberOfRooms: 10,
-    roomSize: '30sqm',
-    unitTitle: 'Solo room/Bedspace/Condo Sharing',
-    unitDescription: 'We accept Bedspacer & Transient Loc: Victoria de Manila, along Taft Ave. Corner Pedro Gil For Transient: Room w/ AC: 750/day per room Bedspace w/ AC: 350/day per head For Monthly: Room w/ AC: 15,000 per room Room w/ AC: 12,000 per room (open sept. 21 - oct. 27) Room w/o AC: 8,000 per room Bedspace w/ AC: 5,500 per head Inclusion: Water Electricity AC (6:00pm to 6:00am Only) Electric Fan ReF Bed and foam Mode of payment: 1month advance and 1month deposit PM for details.',
-    unitPhotos: ['../../assets/images/dorm-2-1.png', '../../assets/images/dorm-2-2.png', '../../assets/images/dorm-2-3.png'],
-    priceOfRent: 5500,
-    totalOccupancy: 0,
-    archived: false
-  }]
+  units = [
+    {
+      pk: 1,
+      unitId: '1',
+      unitType: 'Apartment',
+      location: 'City of Manila',
+      numberOfRooms: 6,
+      roomSize: '25sqm',
+      unitTitle: 'Vista Heights Apartment',
+      unitDescription: 'Near TIP, TUP, NTC, CEU. SAN BEDA 10-15 mins to FEU and UST',
+      unitPhotos: ['../../assets/images/apart-1-1.png', '../../assets/images/apart-1-2.png', '../../assets/images/apart-1-3.png'],
+      priceOfRent: 5500,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 2,
+      unitId: '1',
+      unitType: 'Dormitory',
+      location: 'Caloocan',
+      numberOfRooms: 5,
+      roomSize: '10sqm',
+      unitTitle: 'Female Bedspacer For Rent',
+      unitDescription: 'Inclusions: Utility Bills (water and electricity) Pwede maglaba Pwede magluto Cabinet May wifi (+100).',
+      unitPhotos: ['../../assets/images/dorm-1-1.png', '../../assets/images/dorm-1-2.png', '../../assets/images/dorm-1-3.png'],
+      priceOfRent: 1500,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 3,
+      unitId: '1',
+      unitType: 'Apartment',
+      location: 'Las Pinas',
+      numberOfRooms: 6,
+      roomSize: '20sqm',
+      unitTitle: 'Bedspace Female',
+      unitDescription: '1 Month Advance and 1 Month With Air condition, Kitchen, Lockers and Bathroom Water Included Electricity Excluded Contact: 0909090998',
+      unitPhotos: ['../../assets/images/apart-2-1.png', '../../assets/images/apart-2-2.png', '../../assets/images/apart-2-3.png'],
+      priceOfRent: 2200,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 4,
+      unitId: '1',
+      unitType: 'Apartment',
+      location: 'Makati',
+      numberOfRooms: 3,
+      roomSize: '25sqm',
+      unitTitle: 'Unit for Rent Near Pureza Station',
+      unitDescription: 'Good for 2 to 3 person W/Appliances Loft Type W/2beds Amenities Lap Pool Social hall Gym Roof Deck 24hrs security CCTV hallway 2 months deposit 1 month advance',
+      unitPhotos: ['../../assets/images/apart-3-1.png', '../../assets/images/apart-3-2.png', '../../assets/images/apart-3-3.png'],
+      priceOfRent: 13000,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 5,
+      unitId: '1',
+      unitType: 'Dormitory',
+      location: 'Malabon',
+      numberOfRooms: 10,
+      roomSize: '30sqm',
+      unitTitle: 'Solo room/Bedspace/Condo Sharing',
+      unitDescription: 'We accept Bedspacer. For Transient: Room w/ AC: 750/day per room Bedspace w/ AC: 350/day per head For Monthly: Room w/ AC: 15,000 per room Room w/ AC: 12,000 per room (open sept. 21 - oct. 27) Room w/o AC: 8,000 per room Bedspace w/ AC: 5,500 per head Inclusion: Water Electricity AC (6:00pm to 6:00am Only) Electric Fan ReF Bed and foam Mode of payment: 1month advance and 1month deposit PM for details.',
+      unitPhotos: ['../../assets/images/dorm-2-1.png', '../../assets/images/dorm-2-2.png', '../../assets/images/dorm-2-3.png'],
+      priceOfRent: 5500,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 6,
+      unitId: '1',
+      unitType: 'Apartment',
+      location: 'Mandaluyong',
+      numberOfRooms: 10,
+      roomSize: '10sqm',
+      unitTitle: 'MALE BEDSPACE/CONDO SHARING',
+      unitDescription: 'P3,700/month Upper Deck Bedspace ALL-IN‼ P4,000/month Lower Deck Bedspace ALL-IN‼ INCLUSIONS: Electricity Water Unlimited WIFI DETAILS: Clean and Secured Quiet and Well Ventilated CCTV (24 Hours) Intercom Bed with Pillow 2 Toilet and 🛁 Bath (with bidet) FREE TO USE: 2 Air Conditioner 2 Electric Fan Brand New Bedsheet and Pillow Case With Privacy Curtain Drawer Shoe Rack Laundry Rack/Towel Rack Hot & Cold Water Dispenser Electric kettle Rice cooker Stove Kitchen Utensils Food Storage',
+      unitPhotos: ['../../assets/images/apart-4-1.png', '../../assets/images/apart-4-2.png', '../../assets/images/apart-4-3.png'],
+      priceOfRent: 4000,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 7,
+      unitId: '1',
+      unitType: 'Dormitory',
+      location: 'Marikina',
+      numberOfRooms: 15,
+      roomSize: '30sqm',
+      unitTitle: 'Budget Bedspace Room',
+      unitDescription: 'Accept LADY BEDSPACERS for reviewees only. Accommodate max of 5 to 6 reviewees. Includes ELECTRICITY and WATER With Uratex mattresses With chairs and tables Well-lighted study area, Spacious and well ventilated room. With book shelves, and individual lockers and closets. PHP 2,800 Deposit and PHP 2,800 Advance payments required. (ONE MONTH ADVANCE ONE MONTH DEPOSIT) ALL IN.. Free WIFI Access ELECTRICITY WATER FREE USe oF Rice Cooker FREE USE OF REFRIGERATOR RESERVATION 1K BAWAS kapag nag move in For inquiries. Call me 09165227760 or text Nanay Fatima 09396320204 or PM me.',
+      unitPhotos: ['../../assets/images/dorm-3-1.png', '../../assets/images/dorm-3-2.png', '../../assets/images/dorm-3-3.png'],
+      priceOfRent: 2800,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 8,
+      unitId: '1',
+      unitType: 'Apartment',
+      location: 'Muntinlupa',
+      numberOfRooms: 6,
+      roomSize: '10sqm',
+      unitTitle: 'Female Renters Only',
+      unitDescription: 'HOW MUCH: 4k per head/month WHAT ARE THE INCLUSIONS: Inclusive of association dues. With 2 Double Deck with foam Mini Refrigerator Own CR HOW LONG IS THE DURATION: Only for 6 months (Until March) TERMS OF PAYMENT: 1 month advance, 2 months deposit HOW ABOUT THE BILLS: The total bill for the Electricity & Water will be divided equally by the tenants HOW BIG IS THE UNIT: It’s a studio type unit MOVE IN DATE: ASAP PLEASE PM ME FOR MORE INFORMATION & DETAILS',
+      unitPhotos: ['../../assets/images/apart-5-1.png', '../../assets/images/apart-5-2.png', '../../assets/images/apart-5-3.png'],
+      priceOfRent: 4000,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 9,
+      unitId: '1',
+      unitType: 'Apartment',
+      location: 'Parañaque',
+      numberOfRooms: 2,
+      roomSize: '10sqm',
+      unitTitle: 'RSG Aguila Residents Units',
+      unitDescription: 'RSG Aguila Residents Units For rent 2br loft and t&b, sink Electricity and Water Meters Furnished with appliances Rate 18,000 per month 1 bedloft 15,000 per month Call 0929 244 8380 0927 841 2949',
+      unitPhotos: ['../../assets/images/apart-6-1.png', '../../assets/images/apart-6-2.png', '../../assets/images/apart-6-3.png'],
+      priceOfRent: 18000,
+      totalOccupancy: 0,
+      archived: false
+    },
+    {
+      pk: 10,
+      unitId: '1',
+      unitType: 'Dormitory',
+      location: 'Parañaque',
+      numberOfRooms: 2,
+      roomSize: '20sqm',
+      unitTitle: '2 Bunk Beds With Mattresses',
+      unitDescription: '2 cabinets with built-in table for study purposes (bring your own lock) Aircon Chairs Fire extinguisher Induction cooker Kitchen sink Shoe rack Smoke alarm Stand fan Wardrobe cabinet Unit is wifi & TV cable-ready. (Pwede din naman kayo maki-connect sa amin kung di naman malakas gumamit.) 1 month advance, 1 month deposit Water & electricity (Meralco load) is excluded PM me if you want to check the unit.',
+      unitPhotos: ['../../assets/images/dorm-4-1.png', '../../assets/images/dorm-4-2.png', '../../assets/images/dorm-4-3.png'],
+      priceOfRent: 8000,
+      totalOccupancy: 0,
+      archived: false
+    }
+  ]
 
   userDetails: User
   getUnits: Unit[]
