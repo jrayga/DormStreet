@@ -48,26 +48,33 @@ export class HomePage implements OnInit {
     }
   }
 
-  async getAllUnits(price?: string, location?: string, unitType?: string, numberOfRooms?: number) {
+  refreshItems(event) {
+    this.getAllUnits();
+    event.target.complete();
+  }
+
+  getAllUnits(price?: string, location?: string, unitType?: string, numberOfRooms?: number) {
     this.isLoadingUnits = true
-    if (price != undefined || location != undefined || unitType != undefined || numberOfRooms != undefined) {
-      if (unitType !== '') {
-        this.haveSelectedFilters = true
+    setTimeout(async () => {
+      if (price != undefined || location != undefined || unitType != undefined || numberOfRooms != undefined) {
+        if (unitType !== '') {
+          this.haveSelectedFilters = true
+        }
+        if (location !== '') {
+          this.haveSelectedFilters = true
+        }
+        if (numberOfRooms > 0) {
+          this.haveSelectedFilters = true
+        }
+        if (price !== '') {
+          this.haveSelectedFilters = true
+        }
       }
-      if (location !== '') {
-        this.haveSelectedFilters = true
-      }
-      if (numberOfRooms > 0) {
-        this.haveSelectedFilters = true
-      }
-      if (price !== '') {
-        this.haveSelectedFilters = true
-      }
-    }
-    const units = await this.sqlQueries.getAllUnits(price, location, unitType, numberOfRooms)
-    this.units = await units;
-    this.isEmtpy = this.units.length == 0 ? true : false;
-    this.isLoadingUnits = false
+      const units = await this.sqlQueries.getAllUnits(price, location, unitType, numberOfRooms)
+      this.units = await units;
+      this.isEmtpy = this.units.length == 0 ? true : false;
+      this.isLoadingUnits = false
+    }, 3000)
   }
 
   sortPrice() {

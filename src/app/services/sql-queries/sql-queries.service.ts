@@ -199,11 +199,18 @@ export class SqlQueriesService {
           locationSql = `AND location = '${location}' `;
         }
         if (numberOfRooms > 0) {
-          numberOfRoomsSql = `AND numberOfRooms > ${numberOfRooms} `;
+          if (numberOfRooms == 1) {
+            numberOfRoomsSql = 'AND numberOfRooms BETWEEN 1 AND 5';
+          } else if (numberOfRooms == 5) {
+            numberOfRoomsSql = 'AND numberOfRooms BETWEEN 5 AND 10';
+          } else if (numberOfRooms == 10) {
+            numberOfRoomsSql = 'AND numberOfRooms > 10';
+          }
         }
         if (price !== '') {
           priceSql = `ORDER BY priceOfRent ${price} `;
         }
+        console.log("TCL: SqlQueriesService -> getAllUnits -> numberOfRoomsSql", numberOfRoomsSql)
         getUnits = await alasql(`SELECT * from ? WHERE archived = false ${unitTypeSql} ${locationSql} ${numberOfRoomsSql} ${priceSql}`, [unitsIn]);
       } else {
         getUnits = await alasql('SELECT * from ? ORDER BY unitTitle asc', [unitsIn]);
