@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../../resources/models/user';
 import { SqlQueriesService } from '../../services/sql-queries/sql-queries.service';
 import { Unit } from '../../../resources/models/unit';
-import { LoadingService } from '../../services/loading/loading.service';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 
@@ -29,7 +28,6 @@ export class HomePage implements OnInit {
 
   constructor(
     private sqlQueries: SqlQueriesService,
-    private loadingService: LoadingService,
     private router: Router,
     private platform: Platform
   ) { }
@@ -50,6 +48,7 @@ export class HomePage implements OnInit {
 
   refreshItems(event) {
     this.getAllUnits();
+    this.clearFilters();
     event.target.complete();
   }
 
@@ -74,7 +73,7 @@ export class HomePage implements OnInit {
       this.units = await units;
       this.isEmtpy = this.units.length == 0 ? true : false;
       this.isLoadingUnits = false
-    }, 3000)
+    }, 1500)
   }
 
   sortPrice() {
@@ -92,6 +91,7 @@ export class HomePage implements OnInit {
   }
 
   async clearFilters() {
+    this.priceSort = false
     this.haveSelectedFilters = false
     this.filter = {
       location: '',
