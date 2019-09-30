@@ -30,7 +30,17 @@
     <div *ngIf="!isLoadingUnits">
       <ion-row *ngIf="!isEmtpy; else noUnitsAvailable">
         <ion-col size="12" *ngFor="let unit of units">
-          <ion-card class="my-properties__property-card" button="true" (click)="goToProperty(unit.pk)">
+          <ion-card class="my-properties__property-card">
+            <ion-item>
+              <ion-button fill="outline" color="warning" slot="start" (click)="goToProperty(unit.pk)">
+                <ion-icon slot="start" name="create"></ion-icon>
+                Edit Post
+              </ion-button>
+              <ion-button fill="outline" color="danger" slot="end" (click)="deleteProperty(unit.pk)">
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Delete Post
+              </ion-button>
+            </ion-item>
             <img class="my-properties__property-card--img" src="{{unit.unitPhotos[0]}}" />
             <ion-card-header>
               <ion-card-title>{{unit.unitTitle}}</ion-card-title>

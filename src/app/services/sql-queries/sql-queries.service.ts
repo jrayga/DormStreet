@@ -410,4 +410,23 @@ export class SqlQueriesService {
     })
   }
 
+  async deleteUnitPosting(unitPK: string) {
+    return this.storage.get(TABLES.units).then(async units => {
+      const unitsIn = await JSON.parse(units);
+      let newUnits = [];
+      let detailsUpdated = false;
+      for (const u in unitsIn) {
+        if (unitPK !== unitsIn[u].pk) {
+          newUnits.push(unitsIn[u])
+          detailsUpdated = true;
+        }
+      }
+      await this.storage.set(TABLES.units, JSON.stringify(newUnits))
+      return detailsUpdated
+    }).catch(error => {
+      console.log("TCL: SqlQueriesService -> updateUnit -> error", error)
+      this.alertService.presentErrorAlert('while deleting the unit.')
+    })
+  }
+
 }

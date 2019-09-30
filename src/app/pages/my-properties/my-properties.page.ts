@@ -4,7 +4,8 @@ import { SqlQueriesService } from '../../services/sql-queries/sql-queries.servic
 import { Unit } from '../../../resources/models/unit';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PAGES } from '../../../resources/constants/pages';
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController } from '@ionic/angular';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 @Component({
   selector: 'app-my-properties',
@@ -22,7 +23,9 @@ export class MyPropertiesPage implements OnInit {
     private sqlQueries: SqlQueriesService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private platform: Platform
+    private platform: Platform,
+    private alertController: AlertController,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -70,6 +73,33 @@ export class MyPropertiesPage implements OnInit {
 
   async goToProperty(unitId: string) {
     await this.router.navigate([`update-property/${unitId}`])
+  }
+
+  async deleteProperty(unitId: string) {
+    const deletePropertyAlert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Are you sure you want delete this property posting?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => { }
+        }, {
+          text: 'Yes',
+          handler: async () => {
+            const deletePropery = await this.sqlQueries.deleteUnitPosting(unitId);
+            if (deletePropery) {
+              await this.getUserProfile();
+              this.alertService.presentSuccessAlert("Unit post has been successfully deleted.")
+            } else {
+              this.alertService.presentErrorAlert('While deleting the unit! Please try again.')
+            }
+          }
+        }
+      ]
+    });
+    await deletePropertyAlert.present();
   }
 
 }
