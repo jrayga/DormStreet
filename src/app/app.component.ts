@@ -11,6 +11,8 @@ import { SqlQueriesService } from './services/sql-queries/sql-queries.service';
 import { User } from '../resources/models/user';
 import { USERTYPES } from '../resources/enums/userTypes';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @Component({
   selector: 'app-root',
@@ -46,7 +48,9 @@ export class AppComponent implements OnInit {
     private menuController: MenuController,
     private router: Router,
     private sqlQueries: SqlQueriesService,
-    private imagePicker: ImagePicker
+    private imagePicker: ImagePicker,
+    private sms: SMS,
+    private androidPermissions: AndroidPermissions
   ) { }
 
   ngOnInit() {
@@ -77,22 +81,32 @@ export class AppComponent implements OnInit {
       document.addEventListener("backbutton", function (e) { console.log("disabled") }, false);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.deviceRequest();
+      this.deviceRequestForPlugins();
     } catch (exemption) {
       console.log("TCL: AppComponent -> initializeApp -> exemption", exemption)
       this.alertService.presentErrorAlert('Error on initializeApp.')
     }
   }
 
-  async deviceRequest() {
+  async deviceRequestForPlugins() {
     try {
-      const hasPermission = await this.imagePicker.hasReadPermission()
-      if (!hasPermission) {
+      const hasPermissionImage = await this.imagePicker.hasReadPermission()
+      const hasPermissionSMS = await this.sms.hasPermission()
+      const hasPermissionCall = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CALL_PHONE).then(async hasPermission => {
+        return hasPermission.hasPermission;
+      })
+      if (!hasPermissionImage) {
         await this.imagePicker.requestReadPermission();
       }
+      if (!hasPermissionSMS) {
+        await this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS)
+      }
+      if (!hasPermissionCall) {
+        await this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CALL_PHONE)
+      }
     } catch (error) {
-      console.log("TCL: AppComponent -> deviceRequest -> error", error)
-      this.alertService.presentErrorAlert('Error on device request for image select.')
+      console.log("TCL: AppComponent -> deviceRequestForPlugins -> error", error)
+      // this.alertService.presentErrorAlert(error) // TODO: Show error.
     }
   }
 

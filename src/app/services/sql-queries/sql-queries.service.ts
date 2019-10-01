@@ -234,14 +234,22 @@ export class SqlQueriesService {
     })
   }
 
-  getUser() {
+  getUser(userId?: string) {
     return this.storage.get(TABLES.session).then(async userSession => {
       const session = await userSession;
       const users = await this.storage.get(TABLES.users)
       const usersParsed = JSON.parse(users);
-      for (const i in usersParsed) {
-        if (usersParsed[i].userName == session) {
-          return await usersParsed[i];
+      if (userId) {
+        for (const i in usersParsed) {
+          if (usersParsed[i].pk == userId) {
+            return await usersParsed[i];
+          }
+        }
+      } else {
+        for (const i in usersParsed) {
+          if (usersParsed[i].userName == session) {
+            return await usersParsed[i];
+          }
         }
       }
     }).catch(error => {

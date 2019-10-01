@@ -38,6 +38,14 @@
           <p>{{unitDetails.unitDescription}}</p>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" color="primary" (click)="contactOwner(unitDetails.unitId)">
+            <ion-icon slot="start" name="contact"></ion-icon>
+            Contact Owner
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </div>
   </ion-grid>
 </ion-content>

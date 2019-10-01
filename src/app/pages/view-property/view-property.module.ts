@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewPropertyPage } from './view-property.page';
 
+import { ViewContactDetailsPageModule } from '../view-contact-details/view-contact-details.module';
+import { ViewContactDetailsPage } from '../view-contact-details/view-contact-details.page';
+
 const routes: Routes = [
   {
     path: '',
@@ -15,12 +18,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  declarations: [ViewPropertyPage],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ViewContactDetailsPageModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ViewPropertyPage]
+  entryComponents: [
+    ViewContactDetailsPage
+  ],
+  exports: [ViewPropertyPage]
 })
-export class ViewPropertyPageModule {}
+export class ViewPropertyPageModule { }

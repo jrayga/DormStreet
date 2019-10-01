@@ -4,6 +4,8 @@ import { SqlQueriesService } from '../../services/sql-queries/sql-queries.servic
 import { Unit } from '../../../resources/models/unit';
 import { AlertService } from '../../services/alert/alert.service';
 import { Platform } from '@ionic/angular';
+import { ViewContactDetailsPage } from "../view-contact-details/view-contact-details.page";
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-property',
@@ -19,7 +21,8 @@ export class ViewPropertyPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private sqlQueries: SqlQueriesService,
     private alertService: AlertService,
-    private platform: Platform
+    private platform: Platform,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -48,6 +51,19 @@ export class ViewPropertyPage implements OnInit {
       console.log("TCL: ViewPropertyPage -> getUnitDetails -> error", error)
       this.alertService.presentErrorAlert('While getting the unit details.');
     }
+  }
+
+  async contactOwner(userId: string) {
+    const ownerDetails = await this.sqlQueries.getUser(userId);
+    const contactOwnerModal = await this.modalController.create({
+      component: ViewContactDetailsPage,
+      cssClass: 'viewContactDetailsOfOwnerModal',
+      componentProps: {
+        'userName': ownerDetails.userName,
+        'contactNumber': ownerDetails.contactNumber
+      }
+    });
+    return await contactOwnerModal.present();
   }
 
 }
