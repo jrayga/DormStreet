@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
       const hasPermissionImage = await this.imagePicker.hasReadPermission()
       const hasPermissionSMS = await this.sms.hasPermission()
       const hasPermissionCall = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CALL_PHONE).then(async hasPermission => {
-        return hasPermission.hasPermission;
+        return await hasPermission.hasPermission;
       })
       if (!hasPermissionImage) {
         await this.imagePicker.requestReadPermission();
