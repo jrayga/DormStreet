@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Select Payment Method</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding payment-methods">
+  <ion-grid fixed="true">
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button="true" (click)="pay('Paymaya')">
+          <img class="payment-methods__img" src="../../../assets/payment-methods/paymaya.png" alt="Paymaya" />
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button="true" (click)="pay('Cliqq')">
+          <img class="payment-methods__img" src="../../../assets/payment-methods/cliqq.png" alt="Cliqq" />
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button="true" (click)="pay('GCash')">
+          <img class="payment-methods__img" src="../../../assets/payment-methods/gcash.png" alt="GCash" />
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button="true" (click)="pay('Visa/Mastercard')">
+          <img class="payment-methods__img" src="../../../assets/payment-methods/visa-mastercard.jpg"
+            alt="Visa/Mastercard" />
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

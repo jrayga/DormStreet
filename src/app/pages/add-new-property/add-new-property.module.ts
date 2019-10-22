@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddNewPropertyPage } from './add-new-property.page';
 
+import { PaymentMethodsPageModule } from '../payment-methods/payment-methods.module';
+import { PaymentMethodsPage } from '../payment-methods/payment-methods.page';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,8 +22,12 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PaymentMethodsPageModule,
     RouterModule.forChild(routes)
+  ],
+  entryComponents: [
+    PaymentMethodsPage
   ],
   declarations: [AddNewPropertyPage]
 })
-export class AddNewPropertyPageModule {}
+export class AddNewPropertyPageModule { }
