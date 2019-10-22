@@ -54,18 +54,17 @@ export class AddNewPropertyPage implements OnInit {
     }
   }
 
-  async getUnitImages() {
-    try {
+  getUnitImages() {
+    this.imagePicker.getPictures(ImagePickerOptions).then(async selectedImages => {
       this.images = [];
-      const selectedImages = await this.imagePicker.getPictures(ImagePickerOptions);
       for (var i = 0; i < selectedImages.length; i++) {
         this.images.push('data:image/jpeg;base64,' + selectedImages[i]);
       }
-      this.unitForm.unitPhotos = this.images;
-    } catch (error) {
+      this.unitForm.unitPhotos = await this.images;
+    }).catch(error => {
       console.log("TCL: AddNewPropertyPage -> getUnitImages -> error", error)
       this.alertService.presentErrorAlert('while getting the images for this unit')
-    }
+    })
   }
 
   async addUnit() {

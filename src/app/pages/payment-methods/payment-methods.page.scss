@@ -1,5 +1,9 @@
 .payment-methods {
 
+    &__payment-msg {
+        text-align: center;
+    }
+
     &__img {
         display: block;
         height: 80px;

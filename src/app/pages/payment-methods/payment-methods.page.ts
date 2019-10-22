@@ -10,6 +10,8 @@ import { SqlQueriesService } from 'src/app/services/sql-queries/sql-queries.serv
 })
 export class PaymentMethodsPage {
   @Input() unitForm: Unit;
+  totalAmountToPay = 250;
+  totalMonths = 1;
 
   constructor(
     private modalController: ModalController,
@@ -23,10 +25,23 @@ export class PaymentMethodsPage {
     });
   }
 
+  adjustPayment(method: string) {
+    if (method === 'decrease' && this.totalMonths == 1) {
+      this.totalMonths = 1;
+      this.totalAmountToPay = this.totalMonths * 250;
+    } else if (method === 'decrease' && this.totalMonths > 1) {
+      this.totalMonths--;
+      this.totalAmountToPay = this.totalMonths * 250;
+    } else {
+      this.totalMonths++;
+      this.totalAmountToPay = this.totalMonths * 250;
+    }
+  }
+
   async pay(selectedPayment: string) {
     this.dismissModal();
     const paymentLoading = await this.loadingController.create({
-      message: `Paying with ${selectedPayment}. Please wait...`,
+      message: `Paying the amount of ${this.totalAmountToPay} using ${selectedPayment}. Please wait...`,
       duration: 3000
     });
     await paymentLoading.present();

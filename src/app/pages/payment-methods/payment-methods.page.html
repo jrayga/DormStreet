@@ -11,6 +11,23 @@
 <ion-content class="ion-padding payment-methods">
   <ion-grid fixed="true">
     <ion-row>
+      <ion-col size="3">
+        <ion-button (click)="adjustPayment('decrease')">
+          <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item class="payment-methods__payment-msg">
+          Paying {{totalAmountToPay}} PHP for posting this unit for {{totalMonths}} month/s
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button (click)="adjustPayment('increase')">
+          <ion-icon slot="icon-only" name="arrow-round-forward"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col size="6">
         <ion-card button="true" (click)="pay('Paymaya')">
           <img class="payment-methods__img" src="../../../assets/payment-methods/paymaya.png" alt="Paymaya" />
@@ -32,6 +49,18 @@
         <ion-card button="true" (click)="pay('Visa/Mastercard')">
           <img class="payment-methods__img" src="../../../assets/payment-methods/visa-mastercard.jpg"
             alt="Visa/Mastercard" />
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button="true" (click)="pay('Cebuana')">
+          <img class="payment-methods__img" src="../../../assets/payment-methods/cebuana.png" alt="Cebuana" />
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button="true" (click)="pay('Paypal')">
+          <img class="payment-methods__img" src="../../../assets/payment-methods/paypal.png" alt="Paypal" />
         </ion-card>
       </ion-col>
     </ion-row>
