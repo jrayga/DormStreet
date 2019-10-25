@@ -1,7 +1,7 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Libre+Franklin&display=swap');
 
 /** Ionic CSS Variables **/
 :root {
@@ -72,5 +72,5 @@
   --ion-background-color: #f5f5f5;
 
   /* Set the font family of the entire app */
-  --ion-font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Source Sans Pro", sans-serif;
+  --ion-font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Libre Franklin", sans-serif;
 }
