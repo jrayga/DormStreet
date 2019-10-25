@@ -1,7 +1,33 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
-@import url('https://fonts.googleapis.com/css?family=Libre+Franklin&display=swap');
+@font-face {
+  font-family: 'Libre Franklin';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/main-font/LibreFranklin-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Libre Franklin';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/main-font/LibreFranklin-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Libre Franklin';
+  font-style: italic;
+  font-weight: normal;
+  src: url('../assets/main-font/LibreFranklin-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'Libre Franklin';
+  font-style: italic;
+  font-weight: bold;
+  src: url('../assets/main-font/LibreFranklin-BoldItalic.ttf');
+}
 
 /** Ionic CSS Variables **/
 :root {
